@@ -64,10 +64,10 @@ VALUES ('handle_about', 'SELECT content FROM templates WHERE name = ''about'';')
 ## Why?
 
 - Because we can
-- Because it's funny
 - Because it makes people uncomfortable
 - Because SQL is technically Turing complete
-- Because why not?
+- Because Uncle Bob will probably hate it
+- Because I do whatever I want
 
 ## License
 

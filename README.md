@@ -43,7 +43,6 @@ It:
 3. SQLite says: "Run this SQL"
 4. Go runs SQL
 5. Magic happens
-6. Profit
 
 ## Adding Routes
 

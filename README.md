@@ -1,62 +1,74 @@
 # SQLServe
 
-A web server where SQLite is the source of truth. Routes, templates, and static files are all stored in SQLite, with a minimal Go server handling the HTTP layer.
+A web server where SQLite is the source of truth. Because who needs a real programming language when you have SQL? 😏
 
-## Features
+## The Gimmick
 
-- Routes defined as SQL rows
-- Templates stored in SQLite
-- Static files as BLOBs
-- SQL-based routing and templating
-- Frontend generated from tables
-- Minimal Go server (50 lines)
+- Routes? They're just rows in a table
+- Templates? Stored in SQLite
+- Static files? BLOBs, obviously
+- Logic? Pure SQL, baby
+- Frontend? Generated from tables
+- The actual server? A 50-line Go shim that's just there to make HTTP requests look less suspicious
+
+## The Magic
+
+The server is actually the database file itself. No, really. It's a shell script glued to a SQLite database. When you run it:
+
+```bash
+./sqlserve.db
+```
+
+It:
+1. Extracts itself (very meta)
+2. Runs the database as a server
+3. Makes your coworkers question their life choices
 
 ## Setup
 
-1. Install Go 1.21 or later
-2. Install SQLite3
-3. Clone this repository
-4. Run:
+1. Have Go and SQLite installed (or don't, we're not your parents)
+2. Run:
    ```bash
-   go mod download
-   go run main.go
+   ./build.sh
+   ```
+3. Run the server:
+   ```bash
+   ./sqlserve.db
    ```
 
-The server will start on port 8080 by default. Set the `PORT` environment variable to change this.
+## How It Works (Oversimplified)
 
-## Database Schema
+1. HTTP request comes in
+2. Go asks SQLite: "What do?"
+3. SQLite says: "Run this SQL"
+4. Go runs SQL
+5. Magic happens
+6. Profit
 
-The server uses the following tables:
-- `routes`: HTTP routes and their handlers
-- `templates`: HTML templates
-- `static_files`: Static assets as BLOBs
-- `functions`: SQL functions for handling requests
+## Adding Routes
 
-## Adding New Routes
-
-To add a new route, insert a row into the `routes` table:
+Want a new route? Just add a row:
 
 ```sql
 INSERT INTO routes (path, method, handler_function) 
 VALUES ('/about', 'GET', 'handle_about');
 ```
 
-Then create the corresponding handler function:
+Then write the handler in SQL:
 
 ```sql
 INSERT INTO functions (name, sql_code) 
 VALUES ('handle_about', 'SELECT content FROM templates WHERE name = ''about'';');
 ```
 
-## Adding Static Files
+## Why?
 
-To add a static file:
-
-```sql
-INSERT INTO static_files (path, content, mime_type) 
-VALUES ('/images/logo.png', ?, 'image/png');
-```
+- Because we can
+- Because it's funny
+- Because it makes people uncomfortable
+- Because SQL is technically Turing complete
+- Because why not?
 
 ## License
 
-MIT 
+MIT (because we're not monsters) 
